@@ -39,16 +39,12 @@ if(sessionStorage.getItem('jwt') !== null){
                     return response.json()
                 })
                 .then(function (tasks) {
-                    console.log(tasks)
                     renderizarTodos(tasks);
                 })
                 .catch(function (error) {
                     console.log(error)
                 })
         }
-
-        // Renderizar tareas
-        renderizarTodos()
 
         function renderizarTodos(tasks) {
             //primero limpio los contenedores
@@ -59,7 +55,7 @@ if(sessionStorage.getItem('jwt') !== null){
                 tasks.forEach(tarea => {
                     
                     let template = `
-                    <li class="tarea">
+                    <li class="tarea" id=task-${tarea.id}>
                     <div class="not-done"></div>
                     <div class="descripcion">
                     <p class="nombre">${tarea.description}</p>
@@ -77,6 +73,36 @@ if(sessionStorage.getItem('jwt') !== null){
             }
         }
         
+        // Crear nueva tarea
+        const btnNuevaTarea = document.querySelector(".nueva-tarea button");
+        btnNuevaTarea.addEventListener("click", function(e){
+            e.preventDefault();
+            
+            const settingsNewTask = {
+                method : "POST",
+                headers : {
+                    "Authorization" : sessionStorage.jwt,
+                    "content-type" : "application/json"
+                },
+                body : JSON.stringify({
+                    "description": document.querySelector(".nueva-tarea input").value,
+                    "completed": false
+                })
+            }
+
+            fetch(`${baseUrl}/tasks`, settingsNewTask)
+            .then(function (response) {
+                return response.json()
+            })
+            .then(function (data) {
+                console.log(data);
+                solicitarTareasAPI();
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+        })
+
         //const chekPendientes = document.querySelectorAll(".tareas-pendientes .tarea .not-done");
         //const chekTerminadas = document.querySelectorAll(".tareas-terminadas .tarea .not-done");
 
