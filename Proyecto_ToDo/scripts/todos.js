@@ -16,13 +16,28 @@ let listadoTodos = [
 }
 ];
 
+
 if(sessionStorage.getItem('jwt') !== null){
     window.addEventListener("load", function(){
+        
         const username = document.querySelector('.user-info p');
         
-        if(sessionStorage.getItem('nombre') !== null){
-            username.innerHTML = sessionStorage.getItem('nombre');
-        }        
+        const baseUrl = "https://ctd-todo-api.herokuapp.com/v1";
+
+        // PEDIR A LA API NOMBRE DEL USUARIO
+        const settings = {
+            method : "GET",
+            headers : {
+                "authorization" : sessionStorage.jwt
+            }
+        }
+
+        fetch(`${baseUrl}/users/getMe`, settings)
+        .then(response => response.json())
+        .then(data => {
+            username.innerHTML = data.firstName;
+            sessionStorage.setItem('nombre', data.firstName);
+        });
     
         const tareasPendientes = document.querySelector('.tareas-pendientes');
         const tareasTerminadas = document.querySelector('.tareas-terminadas');

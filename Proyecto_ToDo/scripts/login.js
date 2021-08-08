@@ -18,8 +18,33 @@ window.addEventListener("load", function () {
         const errores = validarInputs(usuario);
 
         if(errores == 0){
-            sessionStorage.setItem('email', usuario.email);
-            window.location.href = '/lista-tareas.html';
+            
+            const baseUrl = "https://ctd-todo-api.herokuapp.com/v1";
+
+            const settings = {
+                method : "POST",
+                headers : {
+                    "Content-type" : "application/json"
+                },
+                body : JSON.stringify(usuario)
+            }
+
+            console.log("Consultando...");
+
+            fetch(`${baseUrl}/users/login`, settings)
+            .then(response => response.json())
+            .then(data => {
+                
+                console.log(data)
+
+                if(data.jwt){
+                    sessionStorage.setItem('nombre', usuario.firstName);
+                    sessionStorage.setItem('email', usuario.email);
+                    sessionStorage.setItem("jwt", data.jwt);
+                    window.location.href = './lista-tareas.html';
+                }
+
+            });
         }
     })
 })
