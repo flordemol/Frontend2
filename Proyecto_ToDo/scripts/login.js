@@ -3,6 +3,9 @@ const errorPass = document.querySelector('.error-pass');
 const errorEmail = document.querySelector('.error-email');
 
 window.addEventListener("load", function () {
+    if (sessionStorage.getItem("jwt") && sessionStorage.getItem("nombre")) {
+        window.location.href = './lista-tareas.html';
+    }
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();

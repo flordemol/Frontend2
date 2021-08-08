@@ -15,6 +15,9 @@ const mjesError = {
 }
 
 window.addEventListener("load", function(){
+    if (sessionStorage.getItem("jwt") && sessionStorage.getItem("nombre")) {
+        window.location.href = './lista-tareas.html';
+    }
 
     formulario.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -74,16 +77,6 @@ function validarInputs(usuario){
     patronContrasenia = /([A-Z]+)/;
     patronMail = /@yahoo/;
 
-    /* SERVÍA CON ARRAY DE USUARIOS HARCODEADO. ahora esta validación la hace la api
-    // busca que el nombre no esté repetido
-    errorNombre.innerHTML = "";
-    usuarios.forEach(u => {
-        if(u == usuario.firstName){
-            errorNombre.innerHTML = mjesError["usuarioExistente"];
-            errores++;
-        }
-    })
-*/
     if(usuario.firstName.length == 0){
         errorNombre.innerHTML = mjesError["vacio"];
         errores++;
