@@ -40,6 +40,7 @@ if(sessionStorage.getItem('jwt') !== null){
                 })
                 .then(function (tasks) {
                     renderizarTodos(tasks);
+                    cambiarEstado();
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -56,7 +57,7 @@ if(sessionStorage.getItem('jwt') !== null){
                     
                     let template = `
                     <li class="tarea" id=task-${tarea.id}>
-                    <div class="not-done"></div>
+                    <div class="not-done ${tarea.completed ? "terminada" : "pendiente"}" data-completed=${tarea.id}></div>
                     <div class="descripcion">
                     <p class="nombre">${tarea.description}</p>
                     <p class="timestamp">Creada: ${tarea.createdAt}</p>
@@ -97,15 +98,44 @@ if(sessionStorage.getItem('jwt') !== null){
             .then(function (data) {
                 console.log(data);
                 solicitarTareasAPI();
+                document.querySelector(".nueva-tarea input").value = "";
             })
             .catch(function (error) {
                 console.log(error)
             })
         })
 
-        //const chekPendientes = document.querySelectorAll(".tareas-pendientes .tarea .not-done");
-        //const chekTerminadas = document.querySelectorAll(".tareas-terminadas .tarea .not-done");
+        // Cambio de estado
+        function cambiarEstado(){
+            const chekTasks = document.querySelectorAll(".tarea .not-done");
+            
+            chekTasks.forEach(item => {
+                item.addEventListener("click", (e) => {
+                    const id = e.target.dataset.completed;
+                    const completada = e.target.classList.contains("terminada");
 
+                    const settings = {
+                        method : "PUT",
+                        headers : {
+                            "Authorization" : sessionStorage.jwt,
+                            "content-type" : "application/json",
+                            id
+                        },
+                        body : JSON.stringify({
+                            "completed": `${!completada}`
+                        })
+                    }
+
+                    fetch(`${baseUrl}/tasks/${id}`, settings)
+                    .then(response => {
+                        console.log(response.status);
+                        solicitarTareasAPI();
+                    })
+
+                })
+            })
+        }
+        
         // Cerrar sesión
         const btnOff = document.querySelector("#off");
         
