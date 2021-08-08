@@ -1,5 +1,3 @@
-let usuarios = ["Ana", "Pedro", "Jorge", "Alejandra"];
-
 const formulario = document.querySelector('form');
 const errorNombre = document.querySelector('.error-nombre');
 const errorApellido = document.querySelector('.error-apellido');
@@ -22,21 +20,49 @@ window.addEventListener("load", function(){
         e.preventDefault();
         
         let usuario = {
-            nombre : document.querySelector('#firstName').value,
-            apellido : document.querySelector('#lastName').value,
-            contrasenia : document.querySelector('#password').value,
-            repetirContrasenia : document.querySelector('#rePassword').value,
+            firstName : document.querySelector('#firstName').value,
+            lastName : document.querySelector('#lastName').value,
+            password : document.querySelector('#password').value,
+            rePassword : document.querySelector('#rePassword').value,
             email : document.querySelector('#email').value
         }
 
         const errores = validarInputs(usuario);
        
         if(errores == 0){
-            sessionStorage.setItem('nombre', usuario.nombre);
-            sessionStorage.setItem('email', usuario.email);
 
-            formulario.reset();
-            window.location.href = '/lista-tareas.html';
+            const baseUrl = "https://ctd-todo-api.herokuapp.com/v1";
+
+            const settings = {
+                method : "POST",
+                headers : {
+                    "Content-type" : "application/json"
+                },
+                body : JSON.stringify({
+                        "firstName": usuario.firstName,
+                        "lastName": usuario.lastName,
+                        "email": usuario.email,
+                        "password": usuario.password
+                })
+            }
+
+            console.log("Consultando...");
+
+            fetch(`${baseUrl}/users`, settings)
+            .then(response => response.json())
+            .then(data => {
+                
+                console.log(data)
+
+                if(data.jwt){
+                    sessionStorage.setItem('nombre', usuario.firstName);
+                    sessionStorage.setItem('email', usuario.email);
+                    sessionStorage.setItem("jwt", data.jwt);
+                }
+
+                formulario.reset();
+                window.location.href = './lista-tareas.html';
+            });
         }
     })
 
@@ -48,37 +74,38 @@ function validarInputs(usuario){
     patronContrasenia = /([A-Z]+)/;
     patronMail = /@yahoo/;
 
+    /* SERVÍA CON ARRAY DE USUARIOS HARCODEADO. ahora esta validación la hace la api
     // busca que el nombre no esté repetido
     errorNombre.innerHTML = "";
     usuarios.forEach(u => {
-        if(u == usuario.nombre){
+        if(u == usuario.firstName){
             errorNombre.innerHTML = mjesError["usuarioExistente"];
             errores++;
         }
     })
-
-    if(usuario.nombre.length == 0){
+*/
+    if(usuario.firstName.length == 0){
         errorNombre.innerHTML = mjesError["vacio"];
         errores++;
     }
 
     errorApellido.innerHTML = "";
-    if(usuario.apellido.length == 0){
+    if(usuario.lastName.length == 0){
         errorApellido.innerHTML = mjesError["vacio"];
         errores++;
     }
 
     errorPass.innerHTML = "";
-    if(usuario.contrasenia.length < 8 ){
+    if(usuario.password.length < 8 ){
         errorPass.innerHTML = mjesError["caracteresPass"];
         errores++;
-    } else if(!patronContrasenia.test(usuario.contrasenia)){
+    } else if(!patronContrasenia.test(usuario.password)){
         errorPass.innerHTML = mjesError["mayusculaPass"];
         errores++;
     }
    
     errorRepetirPass.innerHTML = "";
-    if(usuario.contrasenia != usuario.repetirContrasenia){
+    if(usuario.password != usuario.rePassword){
         errorRepetirPass.innerHTML = mjesError["noCoincidenPass"];
         errores++;
     }
