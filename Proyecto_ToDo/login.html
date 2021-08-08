@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles/login.css">
+  <title>ToDo</title>
+</head>
+<body>
+
+  <form method="POST" id="formLogin">
+    <h1>Ingresar a tu cuenta</h1>
+
+    <div class="image"></div>
+
+    <label>
+        Email:
+        <input type="text" name="email" id="email">
+      </label>
+      <small class="error error-email"></small>
+    <label>
+      Contraseña:
+      <input type="password" name="password" id="password">
+    </label>
+    <small class="error error-pass"></small>
+ 
+    <button type="submit">Ingresar</button>
+
+    <div class="form-footer">
+      <p>ToDo</p>
+      <a href="/index.html">¿No tenés una cuenta? Registrate aquí</a>
+    </div>
+  </form>
+  
+  <script src="scripts/login.js"></script>
+</body>
+</html>

@@ -2,6 +2,7 @@ let usuarios = ["Ana", "Pedro", "Jorge", "Alejandra"];
 
 const formulario = document.querySelector('form');
 const errorNombre = document.querySelector('.error-nombre');
+const errorApellido = document.querySelector('.error-apellido');
 const errorPass = document.querySelector('.error-pass');
 const errorRepetirPass = document.querySelector('.error-pass2');
 const errorEmail = document.querySelector('.error-email');
@@ -21,10 +22,11 @@ window.addEventListener("load", function(){
         e.preventDefault();
         
         let usuario = {
-            nombre : document.querySelectorAll('input')[0].value,
-            contrasenia : document.querySelectorAll('input')[1].value,
-            repetirContrasenia : document.querySelectorAll('input')[2].value,
-            email : document.querySelectorAll('input')[3].value
+            nombre : document.querySelector('#firstName').value,
+            apellido : document.querySelector('#lastName').value,
+            contrasenia : document.querySelector('#password').value,
+            repetirContrasenia : document.querySelector('#rePassword').value,
+            email : document.querySelector('#email').value
         }
 
         const errores = validarInputs(usuario);
@@ -33,15 +35,15 @@ window.addEventListener("load", function(){
             sessionStorage.setItem('nombre', usuario.nombre);
             sessionStorage.setItem('email', usuario.email);
 
-            formulario.reset()
-            formulario.submit();
+            formulario.reset();
+            window.location.href = '/lista-tareas.html';
         }
     })
 
 });
 
 function validarInputs(usuario){
-    
+   
     errores = 0;
     patronContrasenia = /([A-Z]+)/;
     patronMail = /@yahoo/;
@@ -57,6 +59,12 @@ function validarInputs(usuario){
 
     if(usuario.nombre.length == 0){
         errorNombre.innerHTML = mjesError["vacio"];
+        errores++;
+    }
+
+    errorApellido.innerHTML = "";
+    if(usuario.apellido.length == 0){
+        errorApellido.innerHTML = mjesError["vacio"];
         errores++;
     }
 
@@ -85,6 +93,6 @@ function validarInputs(usuario){
         errorEmail.innerHTML = mjesError["mailYahoo"];
         errores++;
     }
-    console.log(usuario);
+
     return errores;
 }

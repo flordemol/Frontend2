@@ -9,39 +9,45 @@
 </head>
 <body>
 
-  <form action="lista-tareas.html" method="POST">
+  <form method="POST" id="formRegister">
     <h1>Nueva cuenta</h1>
 
     <div class="image"></div>
 
     <label>
       Nombre:
-      <input type="text">
+      <input type="text" name="firstName" id="firstName">
     </label>
     <small class="error error-nombre"></small>
     <label>
+      Apellido:
+      <input type="text" name="lastName" id="lastName">
+    </label>
+    <small class="error error-apellido"></small>
+    <label>
       Contraseña:
-      <input type="password">
+      <input type="password" name="password" id="password">
     </label>
     <small class="error error-pass"></small>
     <label>
       Repetir contraseña:
-      <input type="password">
+      <input type="password" name="rePassword" id="rePassword">
     </label>
     <small class="error error-pass2"></small>
     <label>
       Email:
-      <input type="text">
+      <input type="text" name="email" id="email">
     </label>
     <small class="error error-email"></small>
 
-    <button>Crear Cuenta</button>
+    <button type="submit">Crear Cuenta</button>
 
     <div class="form-footer">
       <p>ToDo</p>
+      <a href="/login.html">¿Ya tenés una cuenta? Ingresá aquí</a>
     </div>
   </form>
   
-  <script src="scripts/index.js"></script>
+  <script src="scripts/registro.js"></script>
 </body>
 </html>
