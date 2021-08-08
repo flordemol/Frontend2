@@ -61,6 +61,8 @@ window.addEventListener("load", function(){
                     sessionStorage.setItem('nombre', usuario.firstName);
                     sessionStorage.setItem('email', usuario.email);
                     sessionStorage.setItem("jwt", data.jwt);
+                } else {
+                    alert(data);
                 }
 
                 formulario.reset();

@@ -34,14 +34,14 @@ window.addEventListener("load", function () {
             fetch(`${baseUrl}/users/login`, settings)
             .then(response => response.json())
             .then(data => {
-                
-                console.log(data)
 
                 if(data.jwt){
                     sessionStorage.setItem('nombre', usuario.firstName);
                     sessionStorage.setItem('email', usuario.email);
                     sessionStorage.setItem("jwt", data.jwt);
                     window.location.href = './lista-tareas.html';
+                } else {
+                    alert(data);
                 }
 
             });
