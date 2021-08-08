@@ -70,6 +70,17 @@ if(sessionStorage.getItem('jwt') !== null){
         const chekPendientes = document.querySelectorAll(".tareas-pendientes .tarea .not-done");
         const chekTerminadas = document.querySelectorAll(".tareas-terminadas .tarea .not-done");
         console.log(chekPendientes);
+
+        const btnOff = document.querySelector("#off");
+        
+        btnOff.addEventListener("click", function(){
+            let confirmar = confirm("¿Seguro desea cerrar sesión?");
+            if(confirmar){
+                sessionStorage.clear();
+                window.location.href = "./login.html"
+            }
+        })
+
     })} else {
         window.location.href = "./index.html";
     }

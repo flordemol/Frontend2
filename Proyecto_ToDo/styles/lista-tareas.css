@@ -212,3 +212,13 @@ a {
   color: grey;
   text-decoration: line-through;
 }
+
+#off {
+    font-size: 1.5rem;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+#off:hover {
+  color: whitesmoke;
+}
