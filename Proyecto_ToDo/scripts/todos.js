@@ -1,6 +1,9 @@
 if(sessionStorage.getItem('jwt') !== null){
     window.addEventListener("load", function(){
         
+        renderizarSkeletons(3, ".tareas-pendientes");
+        renderizarSkeletons(3, ".tareas-terminadas");
+
         const username = document.querySelector('.user-info p');
         const tareasPendientes = document.querySelector('.tareas-pendientes');
         const tareasTerminadas = document.querySelector('.tareas-terminadas');
@@ -33,15 +36,15 @@ if(sessionStorage.getItem('jwt') !== null){
         solicitarTareasAPI();
 
         function solicitarTareasAPI() {
-            mostrarSpinner();
-
+            
             //solicitando todas las tareas del usuario
             fetch(`${baseUrl}/tasks`, settingsTasks)
                 .then(function (response) {
                     return response.json()
                 })
                 .then(function (tasks) {
-                    ocultarSpinner();
+                    removerSkeleton(".tareas-terminadas")
+                    removerSkeleton(".tareas-pendientes")
                     renderizarTodos(tasks);
                     cambiarEstado();
                 })
@@ -110,6 +113,7 @@ if(sessionStorage.getItem('jwt') !== null){
 
         // Cambio de estado
         function cambiarEstado(){
+            
             const chekTasks = document.querySelectorAll(".tarea .not-done");
             
             chekTasks.forEach(item => {
