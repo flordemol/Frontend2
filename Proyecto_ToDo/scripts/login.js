@@ -30,6 +30,7 @@ window.addEventListener("load", function () {
             }
 
             console.log("Consultando...");
+            mostrarSpinner();
 
             fetch(`${baseUrl}/users/login`, settings)
             .then(response => response.json())
@@ -40,8 +41,10 @@ window.addEventListener("load", function () {
                     sessionStorage.setItem('email', usuario.email);
                     sessionStorage.setItem("jwt", data.jwt);
                     window.location.href = './lista-tareas.html';
+                    ocultarSpinner();
                 } else {
                     alert(data);
+                    ocultarSpinner();
                 }
 
             });

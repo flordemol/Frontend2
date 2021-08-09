@@ -33,12 +33,15 @@ if(sessionStorage.getItem('jwt') !== null){
         solicitarTareasAPI();
 
         function solicitarTareasAPI() {
+            mostrarSpinner();
+
             //solicitando todas las tareas del usuario
             fetch(`${baseUrl}/tasks`, settingsTasks)
                 .then(function (response) {
                     return response.json()
                 })
                 .then(function (tasks) {
+                    ocultarSpinner();
                     renderizarTodos(tasks);
                     cambiarEstado();
                 })

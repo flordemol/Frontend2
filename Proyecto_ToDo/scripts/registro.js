@@ -50,6 +50,7 @@ window.addEventListener("load", function(){
             }
 
             console.log("Consultando...");
+            mostrarSpinner();
 
             fetch(`${baseUrl}/users`, settings)
             .then(response => response.json())
@@ -65,6 +66,7 @@ window.addEventListener("load", function(){
                     alert(data);
                 }
 
+                ocultarSpinner();
                 formulario.reset();
                 window.location.href = './lista-tareas.html';
             });

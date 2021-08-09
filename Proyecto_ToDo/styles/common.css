@@ -21,3 +21,62 @@ button {
   border: none;
   border-radius: 3px;
 }
+
+  /* Esta clase oculta el formulario */
+  .hidden {
+    display: none;
+    }
+    
+    /* Estilos del Spinner */
+    #contenedor-carga {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      z-index: 2;
+      -webkit-transition: all 3s ease;
+      transition: all 3s ease;
+      -moz-transition: all 3s ease;
+      -ms-transition: all 3s ease;
+      -o-transition: all 3s ease;
+}
+    
+    #carga {
+      border: 10px solid rgb(255, 255, 255);
+      border-top-color: var(--primary);
+      border-left-color: var(--secondary);
+      border-bottom-color: var(--app-grey);
+      position: absolute;
+      top: -100px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      height: 50px;
+      width: 50px;
+      border-radius: 100%;
+      -webkit-animation: girar 1.5s linear infinite;
+      animation: girar 1.5s linear infinite;
+    }
+    
+    /* Animación del spinner */
+    @-webkit-keyframes girar {
+      from {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+      }
+      to {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+      }
+    }
+     
+    @keyframes girar {
+      from {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+      }
+      to {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+      }
+    }
